@@ -1,11 +1,11 @@
 """Main orchestrator file for handling end-to-end point cloud processing."""
 import argparse
-import open3d as o3d
 
 from data_loader import DataLoader
 from downsampling import Downsampler
 from normal_estimation import NormalEstimator
 from cluster_extraction import ClusterExtractor
+from visualizer import Visualizer
 
 class MainApp:
 	"""Main application entry point for point cloud processing."""
@@ -18,27 +18,25 @@ class MainApp:
 		cluster_eps: float,
 		cluster_min_points: int,
 	) -> None:
-		self.name = "MainApp"
 		self.data_loader = DataLoader()
 		self.downsampler = Downsampler(voxel_size=voxel_size)
 		self.normal_estimator = NormalEstimator(radius=normal_radius, max_nn=normal_max_nn)
 		self.cluster_extractor = ClusterExtractor(eps=cluster_eps, min_points=cluster_min_points)
+		self.visualizer = Visualizer()
 
 	def run(self) -> None:
-		"""Loads a point cloud and visualizes it through each stage of the processing pipeline."""
+		"""Loads a point cloud and saves a render of it after each stage of the processing pipeline."""
 		cld = self.data_loader.load()
-		o3d.visualization.draw_geometries([cld], window_name = f"{self.name} - Before")
+		self.visualizer.save_render(cld, "01_initial_point_cloud.png")
 
 		downsampled_cld = self.downsampler.process(cld)
-		o3d.visualization.draw_geometries([downsampled_cld], window_name = f"{self.name} - After Downsampling")
+		self.visualizer.save_render(downsampled_cld, "02_downsampled_point_cloud.png")
 
 		normal_estimated_cld = self.normal_estimator.process(downsampled_cld)
-		o3d.visualization.draw_geometries(
-			[normal_estimated_cld], window_name = f"{self.name} - After Normal Estimation", point_show_normal=True
-		)
+		self.visualizer.save_render(normal_estimated_cld, "03_estimated_normals.png", show_normals=True)
 
 		clustered_cld = self.cluster_extractor.process(normal_estimated_cld)
-		o3d.visualization.draw_geometries([clustered_cld], window_name = f"{self.name} - After Cluster Extraction")
+		self.visualizer.save_render(clustered_cld, "04_clusters_extracted.png")
 
 
 def parse_args() -> argparse.Namespace:
