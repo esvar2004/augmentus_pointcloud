@@ -2,7 +2,7 @@
 import open3d as o3d
 import pytest
 
-from downsampling import Downsampler
+from pipeline.downsampling import Downsampler
 
 @pytest.fixture
 def sample_point_cloud() -> o3d.geometry.PointCloud:

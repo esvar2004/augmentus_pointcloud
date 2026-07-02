@@ -2,7 +2,7 @@
 import open3d as o3d
 import pytest
 
-from normal_estimation import NormalEstimator
+from pipeline.normal_estimation import NormalEstimator
 
 @pytest.fixture
 def sample_point_cloud() -> o3d.geometry.PointCloud:

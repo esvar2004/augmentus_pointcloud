@@ -9,7 +9,7 @@ CAMERA_FRONT = (-0.3, -0.65, -0.7)
 CAMERA_UP = (-0.3, -0.65, 0.7)
 
 # Directory the renders are saved to.
-RESULTS_DIR = Path(__file__).resolve().parent.parent / "figures" / "results"
+RESULTS_DIR = Path(__file__).resolve().parent.parent.parent / "figures" / "results"
 
 
 class Visualizer:

@@ -1,7 +1,7 @@
 """Point cloud downsampling."""
 import open3d as o3d
 
-from point_cloud_processor import PointCloudProcessor
+from pipeline.point_cloud_processor import PointCloudProcessor
 
 
 class Downsampler(PointCloudProcessor):
