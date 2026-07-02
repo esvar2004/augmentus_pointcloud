@@ -1,13 +1,13 @@
 """Main orchestrator file for handling end-to-end point cloud processing."""
 import argparse
 
-from data_loader import DataLoader
-from downsampling import Downsampler
-from normal_estimation import NormalEstimator
-from cluster_extraction import ClusterExtractor
-from visualizer import Visualizer
+from pipeline.data_loader import DataLoader
+from pipeline.downsampling import Downsampler
+from pipeline.normal_estimation import NormalEstimator
+from pipeline.cluster_extraction import ClusterExtractor
+from pipeline.visualizer import Visualizer
 
-class MainApp:
+class Main:
 	"""Main application entry point for point cloud processing."""
 
 	def __init__(
@@ -24,7 +24,7 @@ class MainApp:
 		self.cluster_extractor = ClusterExtractor(eps=cluster_eps, min_points=cluster_min_points)
 		self.visualizer = Visualizer()
 
-	def run(self) -> None:
+	def run_pipeline(self) -> None:
 		"""Loads a point cloud and saves a render of it after each stage of the processing pipeline."""
 		cld = self.data_loader.load()
 		self.visualizer.save_render(cld, "01_initial_point_cloud.png")
@@ -76,11 +76,11 @@ def parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
 	args = parse_args()
-	app = MainApp(
+	app = Main(
 		voxel_size=args.downsampling,
 		normal_radius=args.normal_radius,
 		normal_max_nn=args.normal_max_nn,
 		cluster_eps=args.cluster_eps,
 		cluster_min_points=args.cluster_min_points,
 	)
-	app.run()
+	app.run_pipeline()

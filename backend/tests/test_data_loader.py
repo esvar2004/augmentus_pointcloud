@@ -1,5 +1,5 @@
 """Tests for data_loader.py"""
-from data_loader import DataLoader
+from pipeline.data_loader import DataLoader
 import open3d as o3d
 
 def test_load_returns_point_cloud():

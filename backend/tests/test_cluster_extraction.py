@@ -3,7 +3,7 @@ import numpy as np
 import open3d as o3d
 import pytest
 
-from cluster_extraction import ClusterExtractor, MAIN_COLOR, NOISE_COLOR, SMALL_COLOR
+from pipeline.cluster_extraction import ClusterExtractor
 
 @pytest.fixture
 def sample_point_cloud() -> o3d.geometry.PointCloud:
@@ -24,7 +24,7 @@ def test_extracts_clusters_and_assigns_colors(sample_point_cloud):
 
 def test_produces_more_than_one_segment(sample_point_cloud):
 	# "Segments" here refer to the main structure vs. isolated noise, not multiple real clusters.
-	# This dataset is one continuous surface with no internal gaps, so tuned parameters should 
+	# This dataset is one continuous surface with no internal gaps, so tuned parameters should
 	# keep it intact while still marking sparse outlier points as noise (label -1).
 	extractor = ClusterExtractor(eps=0.1, min_points=10)
 	extractor.process(sample_point_cloud)

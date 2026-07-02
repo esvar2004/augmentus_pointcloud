@@ -2,7 +2,7 @@
 import numpy as np
 import open3d as o3d
 
-from point_cloud_processor import PointCloudProcessor
+from pipeline.point_cloud_processor import PointCloudProcessor
 
 MAIN_COLOR = (0.12, 0.47, 0.71)  # blue
 NOISE_COLOR = (0.84, 0.15, 0.16)  # red
