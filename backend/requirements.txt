@@ -1,2 +1,2 @@
-open3d
-pytest
+open3d==0.19.0
+pytest==9.1.1
